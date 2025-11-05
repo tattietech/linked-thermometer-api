@@ -1,0 +1,72 @@
+# .NET build outputs
+bin/
+obj/
+out/
+artifacts/
+
+# IDE settings
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.DotSettings.user
+
+# ASP.NET Core environment-specific config (ignore dev app settings)
+appsettings.Development.json
+appsettings.*.Development.json
+appsettings.Local.json
+appsettings.*.Local.json
+
+# Logs
+logs/
+Logs/
+*.log
+*.evtx
+*.etl
+*.nlog
+*.svclog
+
+# Test results and coverage
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+.coverage/
+coverage/
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+*.nuget.props
+*.nuget.targets
+
+# Publish / distribution
+publish/
+dist/
+
+# Rider / ReSharper
+_ReSharper*/
+*.ReSharper
+
+# Cache / temp
+*.cache
+*.tmp
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Frontend (if present in the solution)
+node_modules/
+bower_components/
+wwwroot/node_modules/
+wwwroot/lib/
+
+# Docker local overrides and env files (commonly local-only)
+docker-compose.override.yml
+.env
