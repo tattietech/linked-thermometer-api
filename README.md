@@ -195,7 +195,3 @@ The compiled application will be in the `./publish` directory.
 ## License
 
 This project is available for use and modification as needed.
-
-## Contributing
-
-Contributions are welcome. Please ensure all changes maintain compatibility with .NET 8.0 and follow the existing code structure.
