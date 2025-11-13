@@ -1,5 +1,6 @@
 ﻿namespace linked_thermometer_api.Services
 {
+    using linked_thermometer_api.Extensions;
     using linked_thermometer_api.Interfaces;
     using linked_thermometer_api.Models;
     using Microsoft.Azure.Cosmos;
@@ -14,6 +15,9 @@
             // store all readings for historical data and analytics
             reading.Id = Guid.NewGuid().ToString();
             reading.PartitionKey = reading.DeviceId;
+            reading.DayGroup = reading.TimeStamp.RoundDownToTimeSpan(TimeSpan.FromDays(1));
+            reading.HourGroup = reading.TimeStamp.RoundDownToTimeSpan(TimeSpan.FromHours(1));
+            reading.QuarterHourGroup = reading.TimeStamp.RoundDownToTimeSpan(TimeSpan.FromMinutes(15));
 
             await _container.CreateItemAsync(reading);
 

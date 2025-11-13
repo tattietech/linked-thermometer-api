@@ -22,6 +22,15 @@
         [JsonProperty("timeStamp")]
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
 
+        [JsonProperty("hourGroup")]
+        public DateTime HourGroup { get; set; }
+
+        [JsonProperty("quarterHourGroup")]
+        public DateTime QuarterHourGroup { get; set; }
+
+        [JsonProperty("dayGroup")]
+        public DateTime DayGroup { get; set; }
+
         [JsonProperty("partitionKey")]
         public string PartitionKey { get; set; } = string.Empty;
     }
