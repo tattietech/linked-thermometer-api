@@ -35,6 +35,18 @@
             return Ok(response);
         }
 
+        [HttpGet("/graph")]
+        public async Task<IActionResult> GetGraphReadings([FromRoute] string deviceId, DateTime from, DateTime to, string granularity)
+        {
+            if (!Authorised())
+            {
+                return Unauthorized(Empty);
+            }
+
+            var response = await _readingService.GetGraphReadings(deviceId, from, to, granularity);
+            return Ok(response);
+        }
+
         private bool Authorised()
         {
             if (base.Request.Headers.TryGetValue("x-api-key", out var auth))

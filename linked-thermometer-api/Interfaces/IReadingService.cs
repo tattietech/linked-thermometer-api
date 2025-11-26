@@ -6,5 +6,7 @@
     {
         public Task<bool> SendReading(Reading reading);
         public Task<List<Reading>> GetLatestReadings();
+
+        public Task<List<GraphReading>> GetGraphReadings(string deviceId, DateTime from, DateTime to, string granularity);
     }
 }

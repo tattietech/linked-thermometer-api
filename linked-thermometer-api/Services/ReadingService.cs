@@ -52,5 +52,56 @@
 
             return readings;
         }
+
+        public async Task<List<GraphReading>> GetGraphReadings(string deviceId, DateTime from, DateTime to, string granularity)
+        {
+            string queryString =
+                "SELECT c.quarterHourGroup," +
+                "AVG(c.temperature) AS avgTemp," +
+                "MIN(c.temperature) AS minTemp," +
+                "MAX(c.temperature) AS maxTemp," +
+                "AVG(c.humidity) AS avgHum," +
+                "MIN(c.humidity) AS minHum," +
+                "MAX(c.humidity) AS maxHum " +
+                "FROM c " +
+                $"WHERE c.deviceId = '{deviceId}' AND " +
+                $"c.quarterHourGroup >= '{from}' AND " +
+                $"c.quarterHourGroup < '{to}'";
+
+            switch (granularity)
+            {
+                case "quarterHourly":
+                    queryString += "GROUP BY c.quarterHourGroup ORDER BY c.quarterHourGroup";
+                    break;
+                case "hourly":
+                    queryString += "GROUP BY c.hourGroup ORDER BY c.hourGroup";
+                    break;
+                case "daily":
+                    queryString += "GROUP BY c.dayGroup ORDER BY c.dayGroup";
+                    break;
+                default:
+                    queryString += "GROUP BY c.hourGroup ORDER BY c.hourGroup";
+                    break;
+            }
+
+            var query = new QueryDefinition(queryString);
+
+            using FeedIterator<GraphReading> feed = _container.GetItemQueryIterator<GraphReading>(
+                queryDefinition: query
+            );
+
+            var readings = new List<GraphReading>();
+            while (feed.HasMoreResults)
+            {
+                FeedResponse<GraphReading> response = await feed.ReadNextAsync();
+                foreach (GraphReading item in response)
+                {
+                    item.DeviceName = _configuration[deviceId] ?? string.Empty;
+                    readings.Add(item);
+                }
+            }
+
+            return readings;
+        }
     }
 }
