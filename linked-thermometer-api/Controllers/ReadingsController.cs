@@ -19,8 +19,15 @@
                 return Unauthorized(Empty);
             }
 
-            var response = await _readingService.SendReading(reading);
-            return Ok(response);
+            try
+            {
+                var response = await _readingService.SendReading(reading);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]
@@ -31,8 +38,15 @@
                 return Unauthorized(Empty);
             }
 
-            var response = await _readingService.GetLatestReadings();
-            return Ok(response);
+            try
+            {
+                var response = await _readingService.GetLatestReadings();
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("/graph")]
@@ -43,8 +57,15 @@
                 return Unauthorized(Empty);
             }
 
-            var response = await _readingService.GetGraphReadings(deviceId, from, to, granularity);
-            return Ok(response);
+            try
+            {
+                var response = await _readingService.GetGraphReadings(deviceId, from, to, granularity);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         private bool Authorised()
